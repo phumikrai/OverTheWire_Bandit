@@ -19,7 +19,7 @@ This is a note, that written up during learning Besic Linux and Commmand on
 - Understanding how to list files and read contents.
 
 ## Level 1 -> 2
-**Goal:** Read password in file named "-" (special character) 
+**Goal:** Read password in file named "-" [special character](https://linux.die.net/abs-guide/special-chars.html) 
 
 **Steps:**
 1. Connect via SSH:
