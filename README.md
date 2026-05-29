@@ -31,5 +31,17 @@ This is a note, that written up during learning Besic Linux and Commmand on
 
 **Key Takeaway:**
 - "-" is a special character for piping stdout to other commmand, option or prefix in command, rrefer previous directory, and minus sign.
-- File can be named with "-", but this may cause problems.
-- Using path name as prefix is safer, when we want to work with a file.
+
+## Level 2 -> 3
+**Goal:** Read password in file named "--spaces in this filename--" (Filename contains space)
+
+**Steps:**
+1. Connect via SSH:
+   `ssh bandit1@bandit.labs.overthewire.org -p 2220`
+2. Look for a file named "--spaces in this filename--" in home directory:
+   `ls -la`
+3. Deal with filename contains space, requires escape charater, backslash ("\"), for each space. 
+   `cat ~/--spaces\ in\ this\ filename--`
+
+**Key Takeaway:**
+- Backslash ("\") can be used to escape spaces in file name as escape character.
