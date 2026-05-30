@@ -89,6 +89,7 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - `ls -la` can display necessary file properties; such file size and permission.
 - `awk` command is a good choice for working table format output, especially filtering.
+- `|` pipe can be used to carry over the output from the left command to the right one.
 
 ## Level 6 -> 7
 **Goal:** Find a password in a file with 3 following properties:
@@ -107,3 +108,19 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - `find` command is powerful for file searching especially when file properties are required for searching.
 - `find` command can be applied in previous task (Level 5 -> 6) as well, just type `find . -type f -size 1033c -not -executable -exec file {} +`
+
+## Level 7 -> 8
+**Goal:** Find correct password within data.txt (long length file), the correct one next to the word "millionth":
+
+**Steps:**
+1. Check file location:
+   `ls -la`
+2. data.txt file is found with 4MB:
+   `la -la | wc -l` to check number of text lines, the result show over 90k lines contained.
+   `head -n 10 data.txt` to check inside data and its stucture. there are words followed by space and code or password.
+3. The correct password is next to the word "millionth", hence `grep` command (Global Regular Expression Print) is a good choice for searching a text or pattern within a file:
+   `cat data.txt | grep "millionth"`
+
+**Key Takeaway:**
+- `grep` is a command for seaching a specific words or phases or patterns.
+- `wc` is a command for counting a word or number of line within a file.
