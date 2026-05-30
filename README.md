@@ -22,11 +22,9 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Goal:** Read password in file named "-" [special character](https://linux.die.net/abs-guide/special-chars.html) 
 
 **Steps:**
-1. Connect via SSH:
-   `ssh bandit1@bandit.labs.overthewire.org -p 2220`
-2. Look for a file named "-" in home directory:
+1. Look for a file named "-" in home directory:
    `ls -la`
-3. Deal with filename begining with "-", requires prefix such path name:
+2. Deal with filename begining with "-", requires prefix such path name:
    `cat ./-`
 
 **Key Takeaway:**
@@ -36,12 +34,23 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Goal:** Read password in file named "--spaces in this filename--" (Filename contains space)
 
 **Steps:**
-1. Connect via SSH:
-   `ssh bandit1@bandit.labs.overthewire.org -p 2220`
-2. Look for a file named "--spaces in this filename--" in home directory:
+1. Look for a file named "--spaces in this filename--" in home directory:
    `ls -la`
-3. Deal with filename contains space, requires escape charater, backslash ("\"), for each space. 
+2. Deal with filename contains space, requires escape charater, backslash ("\"), for each space. 
    `cat ~/--spaces\ in\ this\ filename--`
 
 **Key Takeaway:**
 - Backslash ("\") can be used to escape spaces in file name as escape character.
+
+## Level 3 -> 4
+**Goal:** Read password within hidden file in directory named "inhere".
+
+**Steps:**
+1. Look for a file within "inhere" directory using ls command and "-a" option to display all files including hidden one, its name precedes with dot ".".
+   `ls -la ~/inhere/`
+2. A hidden file named "...Hiding-From-You" is found, to read just use "cat" command.
+   `cat ~/inhere/...Hiding-From-You`
+
+**Key Takeaway:**
+- To display hidden file require "ls" command with "-a" option
+- A file named with dot "." preceding, is considered as hidden file in Linux system 
