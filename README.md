@@ -46,11 +46,26 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Goal:** Read password within hidden file in directory named "inhere".
 
 **Steps:**
-1. Look for a file within "inhere" directory using ls command and "-a" option to display all files including hidden one, its name precedes with dot ".".
+1. Look for a file within "inhere" directory using `ls` command and "-a" option to display all files including hidden one, its name precedes with dot ".".
    `ls -la ~/inhere/`
-2. A hidden file named "...Hiding-From-You" is found, to read just use "cat" command.
+2. A hidden file named "...Hiding-From-You" is found, to read just use `cat` command.
    `cat ~/inhere/...Hiding-From-You`
 
 **Key Takeaway:**
-- To display hidden file require "ls" command with "-a" option
+- To display hidden file require `ls` command with "-a" option
 - A file named with dot "." preceding, is considered as hidden file in Linux system 
+
+## Level 4 -> 5
+**Goal:** Find a human-readable file (ASCII Text), which contains a password.
+
+**Steps:**
+1. Check all files within "inhere" directory.
+   `ls -la ~/inhere/`
+2. There are 10 files found, to check file type (wheither it is human-readable; ASCII Text), combination of `for loop` and `file` commands can be applied to check those 10 file type.
+   `for file in ~/inhere/*; do file $file; done`
+3. File"-file07" found ASCII Text type (human-readable), to read a password within, just use 'cat` command
+   `cat ~/inhere/-file07` 
+
+**Key Takeaway:**
+- "For loop" syntax is `for {variable} in {list}; do {action}; done` for iteration.
+- To check file type, 'file' command can be used. 
