@@ -63,9 +63,29 @@ This is a note, that written up during learning Besic Linux and Commmand on
    `ls -la ~/inhere/`
 2. There are 10 files found, to check file type (wheither it is human-readable; ASCII Text), combination of `for loop` and `file` commands can be applied to check those 10 file type.
    `for file in ~/inhere/*; do file $file; done`
-3. File"-file07" found ASCII Text type (human-readable), to read a password within, just use 'cat` command
+3. File"-file07" found ASCII Text type (human-readable), to read a password within, just use `cat` command
    `cat ~/inhere/-file07` 
 
 **Key Takeaway:**
 - "For loop" syntax is `for {variable} in {list}; do {action}; done` for iteration.
-- To check file type, 'file' command can be used. 
+- To check file type, 'file' command can be used.
+
+ ## Level 5 -> 6
+**Goal:** Find a password in a file with 3 following properties:
+          1. Human-Readable format (ASCII Text)
+          2. 1033 bytes in size
+          3. non-executable
+
+**Steps:**
+1. After check all files existing by 
+   `ls -la ~/inhere/`
+   Found that there are 20 subdirectories, each directory contains 9 files in 3 different patterns (-file, .file, and space file), so that the total is 20x9=180 files
+2. The key is file size (1033) and non-executable file properties, `ls -la` output can display both file permission and size of the file in column 1 and 5 respectively.
+3. To filter file size (equal to 1033) in column 5, `awk` command is a good choice. Use 'for loop' and `ls -la` to get the output of each subdirectory for applying `awk` command. 
+   `for file in ./inhere/*; do echo $file; ls -la $file | awk '$5==1033 {print $0}'; done`  
+4. The output shows that "./inhere/maybehere07" directory contains a file with 1033 bytes and no execution permission. Then checks it out with `cat` command.
+   `cat ./inhere/maybehere07/.file2` 
+
+**Key Takeaway:**
+- `ls -la` can display necessary file properties; such file size and permission.
+- `awk` command is a good choice for working table format output, especially filtering.
