@@ -89,3 +89,21 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - `ls -la` can display necessary file properties; such file size and permission.
 - `awk` command is a good choice for working table format output, especially filtering.
+
+## Level 6 -> 7
+**Goal:** Find a password in a file with 3 following properties:
+          1. owned by user bandit7
+          2. owned by group bandit6
+          3. 33 bytes in size
+
+**Steps:**
+1. To get file within a server, `find` command is a best choice. This command has options to get files based on their size and owner (both user and group).
+   `find / -size 33c -group bandit6 -user bandit7`
+2. To eliminate stderr, just add `2>/dev/null`.
+   `find / -size 33c -group bandit6 -user bandit7 2>/dev/null`
+3. Finally, there is only one file, which is matched to requirement, then read with `cat`
+   `cat /var/lib/dpkg/info/bandit7.password`
+
+**Key Takeaway:**
+- `find` command is powerful for file searching especially when file properties are required for searching.
+- `find` command can be applied in previous task (Level 5 -> 6) as well, just type `find . -type f -size 1033c -not -executable -exec file {} +`
