@@ -124,3 +124,16 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - `grep` is a command for seaching a specific words or phases or patterns.
 - `wc` is a command for counting a word or number of line within a file.
+
+## Level 8 -> 9
+**Goal:** Find the password within a file (data.txt), the password is the line of text which occurs only once
+
+**Steps:**
+1. Check file location
+   `ls -la`
+2. Key of this challenge is "line of text that occurs only once", so that `uniq` command can play a role in this. 
+   `sort data.txt | uniq -u`
+
+**Key Takeaway:**
+- Sole `uniq` is not be able to detect the duplicate lines unless they are adjacent to each other. Simply using `sort` command to arrange or group all duplicated lines before applying `uniq` command.
+- To get distinct line of text, `sort -u` command can be used instead of `sort data.txt | uniq`
