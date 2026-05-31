@@ -137,3 +137,20 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - Sole `uniq` is not be able to detect the duplicate lines unless they are adjacent to each other. Simply using `sort` command to arrange or group all duplicated lines before applying `uniq` command.
 - To get distinct line of text, `sort -u` command can be used instead of `sort data.txt | uniq`
+
+## Level 9 -> 10
+**Goal:** Find a password in a file. It is human-readable strings, preceded by several "=".
+
+**Steps:**
+1. Check file location
+   `ls -la`
+2. Check file content
+   `head -n 5 data.txt`
+3. Check file type
+   `file data.txt`
+4. According pre-check, it is binary file, to capture human-readable text or strings, `strings` command can be used for extracting string (human-readable text) within a file, then grab the password using `grep` command.
+   `strings data.txt | grep -E '={2,}'`
+
+**Key Takeaway:**
+- `strings` command can encode binary file to text or string (based on selected option, by defaults, encoding based on a single-byte (ASCII)), only sequences of characters (default is 4 characters) will be extracted, the rest shall be eliminated or not displayed.
+- `grep -E '={2,}'` is a command to grab "=" character that occurs more than 2 in the line.
