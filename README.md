@@ -154,3 +154,16 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Key Takeaway:**
 - `strings` command can encode binary file to text or string (based on selected option, by defaults, encoding based on a single-byte (ASCII)), only sequences of characters (default is 4 characters) will be extracted, the rest shall be eliminated or not displayed.
 - `grep -E '={2,}'` is a command to grab "=" character that occurs more than 2 in the line.
+
+## Level 10 -> 11
+**Goal:** Get the password within a file, which encoded with base64.
+
+**Steps:**
+1. check file location and content.
+   `ls -la`
+   `cat data.txt`
+2. the content encoded by base64, so that `base64` command can decode and solve this.
+   `base64 -d data.txt`
+
+**Key Takeaway:**
+- `base64` command can convert text format to base64 format and vise versa (encoding and decoding).
