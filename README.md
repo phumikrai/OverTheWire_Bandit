@@ -172,7 +172,7 @@ This is a note, that written up during learning Besic Linux and Commmand on
 **Goal:** Get the password within a file using [ROT13](https://en.wikipedia.org/wiki/ROT13)
 
 **Steps:**
-1. check file location and content.
+1. Check file location and content.
    `ls -la`
    `cat data.txt`
 2. Using `tr` command to translate using ROT13 or Rotate13, this transforms a text using defined lookup table
@@ -180,3 +180,60 @@ This is a note, that written up during learning Besic Linux and Commmand on
 
 **Key Takeaway:**
 - `tr` command is text transforming command using 2 sets of the character as lookup function. 
+
+## Level 12 -> 13
+**Goal:** Get the password which compressed repeatedly in hexdump file ("data.txt").
+
+**Steps:**
+1. Check file existing.
+   `ls -la`
+2. This task requires temp directory, so create new directory in `/tmp/`, then change working directory to created one.
+   `mktemp -d`
+   `cd /tmp/{new directory}`
+3. Copy hexdump file (working file) from home directory to current working directory.
+   `cp ~/data.txt .`
+4. Reverse hexdump to binary file.
+   `xxd -r data.txt > binary`
+5. Check file type for extraction (based on file type; wheither it is gzip, or bzip2, or tar).
+   `file binary` then;
+   - `gzip -d {file name}.gz` to decompress gzip file
+   - `bzip2 -d {file name}.bz2` to decompress bzip2 file
+   - `tar -xf {file name}.tar` to extract tar file
+6. This file is compressed multiple times, instead of manually decompress and extract, writing a script (bash script) is interesting choice.
+
+```
+#!/bin/bash
+
+FILE=$1
+FTYPE=$(file $FILE)
+
+while ! grep -q "ASCII" <<< $FTYPE; do
+        # print file and its type
+                # check file type then decompress or extract archive
+                if grep -q "gzip" <<< $FTYPE; then
+                        echo "Current file: ${FILE} is gzip type -> decompressed"
+                        mv $FILE "${FILE}.gz";
+                        gzip -d "${FILE}.gz";
+                elif grep -q "bzip2" <<< $FTYPE; then
+                        echo "Current file: ${FILE} is bzip2 type -> decompressed"
+                        mv $FILE "${FILE}.bz2";
+                        bzip2 -d "${FILE}.bz2";
+                elif grep -q "tar" <<< $FTYPE; then
+                        echo "Current file: ${FILE} is tar type -> extracted"
+                        mv $FILE "${FILE}.tar";
+                        tar -xf "${FILE}.tar";
+                        rm "${FILE}.tar";
+                else echo "Unknown type -> error";
+                        exit 1;
+                fi
+        FILE=$(ls -t | grep -vE "(level12_script.sh|data.txt)" | head -n 1);
+        FTYPE=$(file $FILE);
+done
+echo ""
+echo "Final file is ${FILE}."
+cat $FILE
+```
+**Key Takeaway:**
+- File extension do not determine the actual file type, always use `file` command to real file structure
+- Replacing manual action with automation script is powerful choice for solving a task which has pattern of repeated action, reduced time comsuming and tidious action. 
+- `gzip`, `bzip2`, `tar`, and `xxd` are commands to compress, decompress, archive, extract, and convert hexdump to binary respectively, must be put to the right job.  
