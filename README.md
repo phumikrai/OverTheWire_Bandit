@@ -167,3 +167,16 @@ This is a note, that written up during learning Besic Linux and Commmand on
 
 **Key Takeaway:**
 - `base64` command can convert text format to base64 format and vise versa (encoding and decoding).
+
+## Level 11 -> 12
+**Goal:** Get the password within a file using [ROT13](https://en.wikipedia.org/wiki/ROT13)
+
+**Steps:**
+1. check file location and content.
+   `ls -la`
+   `cat data.txt`
+2. Using `tr` command to translate using ROT13 or Rotate13, this transforms a text using defined lookup table
+   `tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt`
+
+**Key Takeaway:**
+- `tr` command is text transforming command using 2 sets of the character as lookup function. 
