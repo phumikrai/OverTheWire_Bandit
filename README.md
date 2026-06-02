@@ -241,3 +241,19 @@ cat $FILE
 - File extension do not determine the actual file type, always use `file` command to real file structure
 - Replacing manual action with automation script is powerful choice for solving a task which has pattern of repeated action, reduced time comsuming and tidious action. 
 - `gzip`, `bzip2`, `tar`, and `xxd` are commands to compress, decompress, archive, extract, and convert hexdump to binary respectively, must be put to the right job.  
+
+## Level 13 -> 14
+**Goal:** There is no password for level 14 in level 13 task, using private SSH Key provided in home directory to log in the next level
+
+**Steps:**
+1. Check files existing in home directory, there are only sshkey.private and HINT files.
+   `ls -la`
+2. HINT file mentioned that logging in from level to another via localhost is prevented, please log out. To get into next level without password, SSH Key is required, "sshkey.private" file shall be copied from server to local machine via `scp`.
+   `scp -P 2220 bandit13@bandit.labs.overthewire.org:~/sshkey.private .`
+3. Copied private key (sshkey.private) can be used to log in next level (level 14) without password.
+   `ssh -i sshkey.private -p 2220 bandit14@bandit.labs.overthewire.org`
+4. To get a password for level 14, it is stored in `/etc/bandit_pass/bandit14` just use `cat` to grap it
+
+**Key Takeaway:**
+- `scp` is a command to copy a file via secure shell.
+- Aside from password authentication, `ssh` can be also connected or established via key-pair authetication (private key and public key). Host server shall hold a public key, and private key must be held by client side.  
