@@ -233,6 +233,10 @@ echo ""
 echo "Final file is ${FILE}."
 cat $FILE
 ```
+7. To run a written script, change permission mode, then run bash script.
+   `chmod u+x level12_script.sh`
+   `./level12_script.sh binary`
+
 **Key Takeaway:**
 - File extension do not determine the actual file type, always use `file` command to real file structure
 - Replacing manual action with automation script is powerful choice for solving a task which has pattern of repeated action, reduced time comsuming and tidious action. 
