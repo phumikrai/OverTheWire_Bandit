@@ -257,3 +257,15 @@ cat $FILE
 **Key Takeaway:**
 - `scp` is a command to copy a file via secure shell.
 - Aside from password authentication, `ssh` can be also connected or established via key-pair authetication (private key and public key). Host server shall hold a public key, and private key must be held by client side.  
+
+## Level 14 -> 15
+**Goal:** Get password from localhost's response after submitting the password of the current level to port 30000.
+
+**Steps:**
+1. After login to level14, there is nothing in home directory.
+2. There are many way to sent a text to localhost on a specific port (30000) to get a password of the next level, `nc` or netcat command is recommended.
+   `nc localhost 30000 <<< "MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS"`
+
+**Key Takeaway:**
+- `nc` is a command for network socket management using raw data transfering.
+- `telnet` is also interesting tool, but this connection protocol (telnet protocol) before text submission, this may cause an error if localhost does not understand control characters of telnet during telnet negotiation stage.
