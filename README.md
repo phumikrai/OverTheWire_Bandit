@@ -269,3 +269,15 @@ cat $FILE
 **Key Takeaway:**
 - `nc` is a command for network socket management using raw data transfering.
 - `telnet` is also interesting tool, but this connection protocol (telnet protocol) before text submission, this may cause an error if localhost does not understand control characters of telnet during telnet negotiation stage.
+
+## Level 15 -> 16
+**Goal:** Get password from localhost's response after submitting the password of the current level to port 30001 using TLS/SSL encryption.
+
+**Steps:**
+1. Login to level15, there is nothing as same as level14 task, but this time requires using TLS/SSL encryption.
+2. One of recommended method for this level is `openssl s_client` command to establish TLS/SSL connection, then just enter the level15 password.
+   `openssl s_client -connect localhost:30001` 
+
+**Key Takeaway:**
+- `openssl s_client` command is useful for TSL/SSL analysis, all details of TLS Handshake process will be displayed as output including TSL version, Ciper Suite, and Certificate Chain.
+- Another method for TLS connection is using `ncat` command: `ncat --ssl localhost 30001`, this is the same command as `nc` but more secure.
