@@ -293,10 +293,10 @@ cat $FILE
 
 ```
 # create list of listening ports as variable
-:~$ ports=$(nmap localhost -p 31000-32000 | grep -E "[0-9]{5}/" | awk -F"/" '{print $1}')
+ports=$(nmap localhost -p 31000-32000 | grep -E "[0-9]{5}/" | awk -F"/" '{print $1}')
 
 # apply for loop to such list
-:~$ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port <<< "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx"; echo ""; done
+for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port <<< "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx"; echo ""; done
 ```
 
 3. The correct credential will be displayed as private key for ssh access to the next level, so copy it.
