@@ -301,7 +301,7 @@ cat $FILE
 
 3. The correct credential will be displayed as private key for ssh access to the next level, so copy it.
 4. Create a file in local machine using copied credential, then use it to login the next level.
-   `ssh -i ./level17_sshkey.private -p 2220 bandit17@bandit.labs.overthewire.org`
+   `ssh -i ./sshkey.private -p 2220 bandit17@bandit.labs.overthewire.org`
 
 **Key Takeaway:**
 - `nmap` is a command for port scanner, even though `nc` command can do it, but `nmap` is more rigid and recommended.
