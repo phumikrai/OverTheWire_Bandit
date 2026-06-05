@@ -305,3 +305,14 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
 
 **Key Takeaway:**
 - `nmap` is a command for port scanner, even though `nc` command can do it, but `nmap` is more rigid and recommended.
+
+## Level 17 -> 18
+**Goal:** Get the password in "password.new" file, it is the only line that has been changed between ".old" and ".new" files
+
+**Steps:**
+1. The only powerful command to check text file different is `diff`, simply type:
+   `diff passwords.new passwords.old`
+2. The output will show the symbol "<" followed by left file's text, and ">" followed by right file's text. This indicates the text line different, and the password is in the ".new" file.
+
+**Key Takeaway:**
+- Although, `cat passwords.new passwords.old | sort | uniq -u` can define the different lines, but this is not effective as same as `diff` command, which is more powerful and analysable.
