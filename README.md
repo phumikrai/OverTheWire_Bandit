@@ -233,6 +233,7 @@ echo ""
 echo "Final file is ${FILE}."
 cat $FILE
 ```
+
 7. To run a written script, change permission mode, then run bash script.
    `chmod u+x level12_script.sh`
    `./level12_script.sh binary`
@@ -281,3 +282,26 @@ cat $FILE
 **Key Takeaway:**
 - `openssl s_client` command is useful for TSL/SSL analysis, all details of TLS Handshake process will be displayed as output including TSL version, Ciper Suite, and Certificate Chain.
 - Another method for TLS connection is using `ncat` command: `ncat --ssl localhost 30001`, this is the same command as `nc` but more secure.
+
+## Level 16 -> 17
+**Goal:** Get password from localhost's response after submitting the password of the current level to port in range 31000 to 32000 using TLS/SSL encryption.
+
+**Steps:**
+1. According previous task, `ncat` command is another command that can be used to send a message to a server using TLS/SSL encryption, but manually sending to each port in range 31000 to 32000 is impossible. Port scanner command like `nmap` can overcome this.
+   `nmap localhost -p 31000-32000`
+2. After listening ports are found, `ncat` could be used to get credential for the next level. But this could be better if this is worked automatically.
+
+```
+# create list of listening ports as variable
+:~$ ports=$(nmap localhost -p 31000-32000 | grep -E "[0-9]{5}/" | awk -F"/" '{print $1}')
+
+# apply for loop to such list
+:~$ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port <<< "kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx"; echo ""; done
+```
+
+3. The correct credential will be displayed as private key for ssh access to the next level, so copy it.
+4. Create a file in local machine using copied credential, then use it to login the next level.
+   `ssh -i ./level17_sshkey.private -p 2220 bandit17@bandit.labs.overthewire.org`
+
+**Key Takeaway:**
+- `nmap` is a command for port scanner, even though `nc` command can do it, but `nmap` is more rigid and recommended.
