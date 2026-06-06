@@ -316,3 +316,16 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
 
 **Key Takeaway:**
 - Although, `cat passwords.new passwords.old | sort | uniq -u` can define the different lines, but this is not effective as same as `diff` command, which is more powerful and analysable.
+
+## Level 18 -> 19
+**Goal:** Get a password in "readme" file in home directory, but server will log out immediately after log in.
+
+**Steps:**
+1. This task is just getting a "readme" file without logging in the server, but copying and transferring a file is still possible. Using `scp` command with level 18 password to get a password for the next level.
+   `scp -P 2220 bandit18@bandit.labs.overthewire.org:~/readme .`
+2. After readme file is downloaded to local machine, then using `cat` to read a password within.
+   `cat readme` 
+
+**Key Takeaway:**
+- After login as bandit17 user, investigating `cat ../bandit18/.bashrc` found `exit 0` command at the bottom line. this causes all logging in as bandit18 user will immediately logout after ".bashrc" script is running.
+- ".bashrc" is personal script for a specific user, this script will be automatically run everytime terminal is opened or `ssh` login. Avoiding a script runnning, `scp` comes a role in this task.
