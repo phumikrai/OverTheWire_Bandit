@@ -327,5 +327,5 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
    `cat readme` 
 
 **Key Takeaway:**
-- After login as bandit17 user, investigating `cat ../bandit18/.bashrc` found `exit 0` command at the bottom line. this causes all logging in as bandit18 user will immediately logout after ".bashrc" script is running.
+- After login as bandit19 user, investigating `cat ../bandit18/.bashrc` found `exit 0` command at the bottom line. this causes all logging in as bandit18 user will immediately logout after ".bashrc" script is running.
 - ".bashrc" is personal script for a specific user, this script will be automatically run everytime terminal is opened or `ssh` login. Avoiding a script runnning, `scp` comes a role in this task.
