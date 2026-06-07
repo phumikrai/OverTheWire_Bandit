@@ -329,3 +329,15 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
 **Key Takeaway:**
 - After login as bandit19 user, investigating `cat ../bandit18/.bashrc` found `exit 0` command at the bottom line. this causes all logging in as bandit18 user will immediately logout after ".bashrc" script is running.
 - ".bashrc" is personal script for a specific user, this script will be automatically run everytime terminal is opened or `ssh` login. Avoiding a script runnning, `scp` comes a role in this task.
+
+## Level 19 -> 20
+**Goal:** Use setuid binary (owned by bandit20) in home directory to get a password of the next level in "/etc/bandit_pass".
+
+**Steps:**
+1. Even though the executable file is owned by another user, but it us setuid permission which allows any users can execute this file as the file's owner (the process takes the effective UID of the file's owner)
+2. The provided executable file allows any user to run a command through arguments with the permissions of the file's owner. So that the password can be read in "/etc/bandit_pass" using this executable file.
+   `./bandit20-do cat /etc/bandit_pass/bandit20`
+
+**Key Takeaway:**
+- Setuid is one of the special file permission in Linux, this allows a user to execute a program with the permissions of the file’s owner, rather than their own.
+- Besides, there are other special permission such as setgid that allows a user to execute a program with the permission of the file's group, When applied to a directory, it ensures that all newly created files and subdirectories inherit the group ownership of that parent directory and sticky bit that allows any user to read, write, and execute a file except deletion.
