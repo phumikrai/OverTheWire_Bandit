@@ -341,3 +341,16 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
 **Key Takeaway:**
 - Setuid is one of the special file permission in Linux, this allows a user to execute a program with the permissions of the file’s owner, rather than their own.
 - Besides, there are other special permission such as setgid that allows a user to execute a program with the permission of the file's group, When applied to a directory, it ensures that all newly created files and subdirectories inherit the group ownership of that parent directory and sticky bit that allows any user to read, write, and execute a file except deletion.
+
+## Level 20 -> 21
+**Goal:** Get a password by text comparison during tcp connection using setuid binary file, which makes a connection to localhost on the specific port, then read a response text, if it matchs to the previous password (bandit20), the next level password will be transmitted.
+
+**Steps:**
+1. The key of this task is making tcp connection (server and client sides), Server shall send a password of the previous level to the client (using `./suconnect`) for reading and automatically reponse a password. `nc -l` can be used as server listening for connection because `./suconnect` has bot option for listening, it can only making a connect to something as client.
+2. To make a listening server, which response back a password to connecting client.
+   `cat /etc/bandit_pass/bandit20 | nc -l 5555 &`
+3. Now, the listening server is setup, then connects to such port using provided binary file.
+   `./suconnect 5555`
+
+**Key Takeaway:**
+- `&` is specifing preceding command shall be running in background, to check command status just type `jobs`.
