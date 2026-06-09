@@ -354,3 +354,34 @@ for port in $ports; do echo "Checking Port: ${port}"; ncat --ssl localhost $port
 
 **Key Takeaway:**
 - `&` is specifing preceding command shall be running in background, to check command status just type `jobs`.
+
+## Level 21 -> 22
+**Goal:** Check a script or a command that is being executed automatically by cron to get a password.
+
+**Steps:**
+1. Check cron configuration file in "/etc/cron.d/", "cronjob_bandit22" file is found, check it out the command that being executed.
+   `cat /etc/cron.d/cronjob_bandit22`
+
+```
+# Output shows
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+```
+
+2. There is a script named "cronjob_bandit22.sh" being scheduled, both stdout and stderr are thrown away to "/dev/null". this is suspicous.
+   `cat /usr/bin/cronjob_bandit22.sh`
+
+```
+# Output shows
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+
+3. The script being executed is redirect the stdout from `cat` command which is reading a password of the next level (bandit22) to "/tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv" directory.
+   `cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv`
+
+**Key Takeaway:**
+- `cron` is a time-based job scheduling daemon, this is working together with `crontab`.
+- `crontab` is a configuration file that store scheduled tasks, its syntax comprise of five wildcards (minute, hour, day, month, and day of week) followed by a command to run.
+
