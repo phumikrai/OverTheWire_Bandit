@@ -385,3 +385,37 @@ cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 - `cron` is a time-based job scheduling daemon, this is working together with `crontab`.
 - `crontab` is a configuration file that store scheduled tasks, its syntax comprise of five wildcards (minute, hour, day, month, and day of week) followed by a command to run.
 
+## Level 23 -> 24
+**Goal:** Check a script or a command that is being executed automatically by cron to get a password.
+
+**Steps:**
+1. Check a command that being executed within cron configuration file in "/etc/cron.d/".
+   `cat /etc/cron.d/cronjob_bandit23`
+
+```
+# Output shows
+@reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+* * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
+```
+
+2. A scheduled script is found, then check it out.
+   `cat /usr/bin/cronjob_bandit23.sh`
+
+```
+# Output shows
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+```
+
+3. It is clear that this script is written to read a password then redirect stdout to some directory in `/tmp`, a directory name is hashing text. There are two declared variables, `$myname` and `$mytarget`. Both variables shall be replaced to get the correct directory name and the password of the next level.
+   `cat /tmp/$(echo I am user bandit23 | md5sum | cut -d ' ' -f 1)`
+
+**Key Takeaway:**
+- `md5sum` is a command to create or verify text hashing.
+- `cut` is a command to split a text based on provided criteria, this command function as same as `awk`, but lighter, it is good for uncomplicate task.
